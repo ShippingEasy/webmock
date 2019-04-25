@@ -11,7 +11,7 @@ module HTTP
     end
 
     class << self
-      def from_webmock(webmock_response, request_signature = nil)
+      def from_webmock(webmock_response, request, request_signature = nil)
         status  = Status.new(webmock_response.status.first)
         headers = webmock_response.headers || {}
         body    = Body.new Streamer.new webmock_response.body
@@ -24,7 +24,8 @@ module HTTP
           version: "1.1",
           headers: headers,
           body: body,
-          uri: uri
+          uri: uri,
+          request: request
         })
       end
 
